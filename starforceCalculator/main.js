@@ -647,8 +647,6 @@ document.addEventListener("DOMContentLoaded", function () {
     
             document.getElementById("30").disabled = true;
             document.getElementById("30").checked = false;
-		
-		document.getElementById("DT").disabled = false;
 
             document.getElementById('target_stars').value = 12;
     
@@ -660,7 +658,7 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("plus2").checked = false;
                     document.getElementById('error-container').style.display = '';
             document.getElementById('error-msg').innerHTML =
-                `<p style="color:#C0FFC2">Note: Getting above 12 stars on Tyrant gear is nearly impossible. The calculator may crash if you attempt going above 12 stars.</p>`;
+                `<p style="color:#8b3687">Note: Getting above 12 stars on Tyrant gear is nearly impossible. The calculator may crash if you attempt going above 12 stars.</p>`;
     
         }
         if (document.getElementById("normal").selected){
@@ -675,7 +673,6 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById('target_stars').value = 21;
     
             document.getElementById("level").disabled = false;
-		document.getElementById("DT").disabled = false;
     
             document.getElementById("5_10_15").disabled = false;
             document.getElementById("30").disabled = false;
