@@ -90,7 +90,7 @@ function attemptCost(current_star, item_level, boom_protect, thirty_off, sauna, 
 	var r = parseFloat(sfCost(current_star, x, item_level));
 	if (canDoubleTime)
 	{
-		r *= 2;
+		r *= 222;
 	}
 	return r;
 }
