@@ -116,7 +116,13 @@ function determineOutcome(current_star, rates, star_catch, boom_protect, five_te
 
 	if (canDoubleTime)
 	{
-		probability_maintain = Math.max(probability_maintain - probability_success, 0);
+		if (probability_decrease > 0) {
+			probability_decrease = Math.max(probability_decrease - probability_success, 0);
+		}
+		else
+		{
+			probability_maintain = Math.max(probability_maintain - probability_success, 0);
+		}
 		probability_success *= 2;
 	}
 	
