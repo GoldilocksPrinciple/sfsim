@@ -209,12 +209,18 @@ function performExperiment(current_stars, desired_star, rates, item_level, boom_
                 current_star--;
                 canDoubleTime = true;
             } else if (outcome == "Maintain") {
+		    if (current_star == 10 || current_star == 15 || current_star == 20)
+		    {
+			    canDoubleTime = true;
+		    }
                 decrease_count = 0;
             } else if (outcome == "Boom" && item_type == 'normal') {
+		    canDoubleTime = false;
                 decrease_count = 0;
                 current_star = 12;
                 total_booms++;
             } else if (outcome == "Boom" && item_type == 'tyrant') {
+		    canDoubleTime = false;
                 decrease_count = 0;
                 current_star = 0;
                 total_booms++;
@@ -256,18 +262,20 @@ function repeatExperiment(total_trials, current_star, desired_star, rates, item_
 	var canDoubleTime = false;
 
     while (current_trial < total_trials) {
-        var trial_mesos = performExperiment(current_star, desired_star, rates, item_level, boom_protect, thirty_off, star_catch, five_ten_fifteen, sauna, silver, gold, diamond, item_type, two_plus, useAEE, canDoubleTime)[0];
+	    var lmao = performExperiment(current_star, desired_star, rates, item_level, boom_protect, thirty_off, star_catch, five_ten_fifteen, sauna, silver, gold, diamond, item_type, two_plus, useAEE, canDoubleTime);
+	    
+        var trial_mesos = lmao[0];
         meso_result_list.push(trial_mesos);
         meso_result_list_divided.push(trial_mesos / 1000000000);
 
-        var trial_booms = performExperiment(current_star, desired_star, rates, item_level, boom_protect, thirty_off, star_catch, five_ten_fifteen, sauna, silver, gold, diamond, item_type, two_plus, useAEE, canDoubleTime)[1];
+        var trial_booms = lmao[1];
         boom_result_list.push(trial_booms);
 
         total_mesos = total_mesos + trial_mesos;
         total_booms = total_booms + trial_booms;
 		if (useDT)
 		{
-			canDoubleTime = performExperiment(current_star, desired_star, rates, item_level, boom_protect, thirty_off, star_catch, five_ten_fifteen, sauna, silver, gold, diamond, item_type, two_plus, useAEE, canDoubleTime)[2];
+			canDoubleTime = lmao[2];
 		}
         current_trial++;
     }
