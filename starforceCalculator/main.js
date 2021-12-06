@@ -342,7 +342,7 @@ function do_stuff() {
         document.getElementById('graphhere').style.display='none';
         document.getElementById('error-container').style.display='';
         document.getElementById('error-msg').innerHTML =
-            `<p style="color:#8b3687">Error: Minimum Star Value is 0 and Maximum Star Value is 25.</p>`
+            `<p style="color:#C0FFC2">Error: Minimum Star Value is 0 and Maximum Star Value is 25.</p>`
         return false
     }
     if (item_type == 'tyrant' && (desired_star > 15 || desired_star < 0 || current_star < 0)){
@@ -350,7 +350,7 @@ function do_stuff() {
         document.getElementById('graphhere').style.display='none';
         document.getElementById('error-container').style.display='';
         document.getElementById('error-msg').innerHTML =
-            `<p style="color:#8b3687">Error: Minimum Star Value is 0 and Maximum Star Value is 15.</p>`
+            `<p style="color:#C0FFC2">Error: Minimum Star Value is 0 and Maximum Star Value is 15.</p>`
         return false
     }
     var boom_protect = document.getElementById('safeguard').value == 'yes';
@@ -513,7 +513,7 @@ function do_stuff() {
         series: [{
             name: 'Histogram',
             type: 'histogram',
-            color: '#8b3687',
+            color: '#C0FFC2',
             xAxis: 1,
             yAxis: 1,
             baseSeries: 's1',
@@ -653,7 +653,7 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("plus2").checked = false;
                     document.getElementById('error-container').style.display = '';
             document.getElementById('error-msg').innerHTML =
-                `<p style="color:#8b3687">Note: Getting above 12 stars on Tyrant gear is nearly impossible. The calculator may crash if you attempt going above 12 stars.</p>`;
+                `<p style="color:#C0FFC2">Note: Getting above 12 stars on Tyrant gear is nearly impossible. The calculator may crash if you attempt going above 12 stars.</p>`;
     
         }
         if (document.getElementById("normal").selected){
@@ -677,7 +677,7 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("plus2").disabled = false;
             document.getElementById('error-container').style.display = '';
             document.getElementById('error-msg').innerHTML =
-                `<p style="color:#8b3687">Note: Getting above 22 stars on Normal gear is very unlikely. The calculator may crash if you attempt going above 22 stars.</p>`;
+                `<p style="color:#C0FFC2">Note: Getting above 22 stars on Normal gear is very unlikely. The calculator may crash if you attempt going above 22 stars.</p>`;
         }
     }).change();
 });
