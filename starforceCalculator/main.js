@@ -171,12 +171,13 @@ function determineOutcome(current_star, rates, star_catch, boom_protect, five_te
     }
 }
 
-function performExperiment(current_stars, desired_star, rates, item_level, boom_protect, thirty_off, star_catch, five_ten_fifteen, sauna, silver, gold, diamond, item_type, two_plus, useAEE, canDoubleTime) {
+function performExperiment(current_stars, desired_star, rates, item_level, boom_protect, thirty_off, star_catch, five_ten_fifteen, sauna, silver, gold, diamond, item_type, two_plus, useAEE, useDT) {
     /** returns [total_mesos, total_booms]  or [AEE_amount, total_booms]*/
     var current_star = current_stars;
     var total_mesos = 0;
     var total_booms = 0;
     var decrease_count = 0;
+	var canDoubleTime = false;
 
     while (current_star < desired_star) {
         if (useAEE){
@@ -213,9 +214,12 @@ function performExperiment(current_stars, desired_star, rates, item_level, boom_
             } else if (outcome == "Decrease") {
                 decrease_count++;
                 current_star--;
-                canDoubleTime = true;
+		    if (useDT)
+		    {
+                	canDoubleTime = true;
+		    }
             } else if (outcome == "Maintain") {
-		    if (current_star == 10 || current_star == 15 || current_star == 20)
+		    if (useDT && (current_star == 10 || current_star == 15 || current_star == 20))
 		    {
 			    canDoubleTime = true;
 		    }
@@ -265,10 +269,8 @@ function repeatExperiment(total_trials, current_star, desired_star, rates, item_
     var boom_result_list = [];
     var meso_result_list_divided = [];
 	
-	var canDoubleTime = false;
-
     while (current_trial < total_trials) {
-	    var lmao = performExperiment(current_star, desired_star, rates, item_level, boom_protect, thirty_off, star_catch, five_ten_fifteen, sauna, silver, gold, diamond, item_type, two_plus, useAEE, canDoubleTime);
+	    var lmao = performExperiment(current_star, desired_star, rates, item_level, boom_protect, thirty_off, star_catch, five_ten_fifteen, sauna, silver, gold, diamond, item_type, two_plus, useAEE, useDT);
 	    
         var trial_mesos = lmao[0];
         meso_result_list.push(trial_mesos);
@@ -279,10 +281,7 @@ function repeatExperiment(total_trials, current_star, desired_star, rates, item_
 
         total_mesos = total_mesos + trial_mesos;
         total_booms = total_booms + trial_booms;
-		if (useDT)
-		{
-			canDoubleTime = lmao[2];
-		}
+
         current_trial++;
     }
     var average_cost = parseFloat((total_mesos / total_trials).toFixed(0));
