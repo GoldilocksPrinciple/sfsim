@@ -89,15 +89,15 @@ function attemptCost(current_star, item_level, boom_protect, thirty_off, sauna, 
 	}
 	var r = parseFloat(sfCost(current_star, x, item_level));
 	
-	if (canDoubleTime)
-	{
-		r *= 2;
-	}
-	
 	var MLG = document.getElementById('mlgCost').value; // approx nx cost
 	var NX = document.getElementById('nxPerStarApprox').value * current_star;
 	var nxApprox = NX / 1000000;
 	r += nxApprox * MLG;
+	
+	if (canDoubleTime)
+	{
+		r *= 2;
+	}
 	
 	return r;
 }
