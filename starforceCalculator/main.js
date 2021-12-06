@@ -342,7 +342,7 @@ function do_stuff() {
         document.getElementById('graphhere').style.display='none';
         document.getElementById('error-container').style.display='';
         document.getElementById('error-msg').innerHTML =
-            `<p style="color:#C0FFC2">Error: Minimum Star Value is 0 and Maximum Star Value is 25.</p>`
+            `<p style="color:#8b3687">Error: Minimum Star Value is 0 and Maximum Star Value is 25.</p>`
         return false
     }
     if (item_type == 'tyrant' && (desired_star > 15 || desired_star < 0 || current_star < 0)){
@@ -350,7 +350,7 @@ function do_stuff() {
         document.getElementById('graphhere').style.display='none';
         document.getElementById('error-container').style.display='';
         document.getElementById('error-msg').innerHTML =
-            `<p style="color:#C0FFC2">Error: Minimum Star Value is 0 and Maximum Star Value is 15.</p>`
+            `<p style="color:#8b3687">Error: Minimum Star Value is 0 and Maximum Star Value is 15.</p>`
         return false
     }
     var boom_protect = document.getElementById('safeguard').value == 'yes';
