@@ -214,7 +214,7 @@ function performExperiment(current_stars, desired_star, rates, item_level, boom_
 
 function sfCost(chuc, superior)
 {
-	double min = Math.min(1.25, Math.max(1, Math.log(reqLevel)));
+	var min = Math.min(1.25, Math.max(1, Math.log(reqLevel)));
 
         if (superior) {
             return Math.pow(reqLevel, 3.2394);
