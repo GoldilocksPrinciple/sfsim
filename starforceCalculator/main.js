@@ -94,8 +94,8 @@ function attemptCost(current_star, item_level, boom_protect, thirty_off, sauna, 
 		r *= 2;
 	}
 	
-	var MLG = 15000000; // approx nx cost
-	var NX = 200000 * current_star;
+	var MLG = document.getElementById('mlgCost').value; // approx nx cost
+	var NX = document.getElementById('nxPerStarApprox').value * current_star;
 	var nxApprox = NX / 1000000;
 	r += nxApprox * MLG;
 	
