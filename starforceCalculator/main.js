@@ -80,57 +80,14 @@ function median(values) {
         return (values[half - 1] + values[half]) / 2.0;
 }
 
-function attemptCost(current_star, item_level, boom_protect, thirty_off, sauna, silver, gold, diamond, five_ten_fifteen, chance_time, item_type) {
-    if (item_type == "tyrant"){
-        var attempt_cost = item_level**3.56;
-        return parseFloat(attempt_cost.toFixed(0))
-    }
-    else{
-        var attempt_cost;
-        var multiplier = 1;
-
-        if (current_star >= 0 && current_star <= 9) {
-            attempt_cost = 1000 + item_level ** 3 * (current_star + 1) / 25;
-        }
-        if (current_star >= 10 && current_star <= 14) {
-            attempt_cost = 1000 + item_level ** 3 * ((current_star + 1) ** 2.7) / 400;
-        }
-        if (current_star >= 15 && current_star <= 17) {
-            attempt_cost = 1000 + item_level ** 3 * ((current_star + 1) ** 2.7) / 120;
-        }
-        if (current_star >= 18 && current_star <= 19) {
-            attempt_cost = 1000 + item_level ** 3 * ((current_star + 1) ** 2.7) / 110;
-        }
-        if (current_star >= 20 && current_star <= 24) {
-            attempt_cost = 1000 + item_level ** 3 * ((current_star + 1) ** 2.7) / 100;
-        }
-        if (boom_protect && !(five_ten_fifteen && current_star == 15) && !(chance_time)) {
-            if (sauna) {
-                if (current_star >= 15 && current_star <= 16) {
-                    multiplier = multiplier + 1;
-                }
-            }
-            else {
-                if (current_star >= 12 && current_star <= 16) {
-                    multiplier = multiplier + 1;
-                }
-            }
-        }
-        if (silver && current_star <= 15) {
-            multiplier = multiplier - 0.03;
-        }
-        if (gold && current_star <= 15) {
-            multiplier = multiplier - 0.05;
-        }
-        if (diamond && current_star <= 15) {
-            multiplier = multiplier - 0.1;
-        }
-        if (thirty_off) {
-            multiplier = multiplier - 0.3;
-        }
-        attempt_cost = attempt_cost * multiplier;
-        return parseFloat(attempt_cost.toFixed(0))
-    }
+function attemptCost(current_star, item_level, boom_protect, thirty_off, sauna, silver, gold, diamond, five_ten_fifteen, chance_time, item_type)
+{
+	var x = false;
+	if (item_type == "tyrant")
+	{
+		x = true;
+	}
+	return parseFloat(sfCost(current_star, x));
 }
 
 function checkChanceTime(decrease_count) {
@@ -255,6 +212,25 @@ function performExperiment(current_stars, desired_star, rates, item_level, boom_
     return [total_mesos, total_booms]
 }
 
+function sfCost(chuc, superior)
+{
+	double min = Math.min(1.25, Math.max(1, Math.log(reqLevel)));
+
+        if (superior) {
+            return Math.pow(reqLevel, 3.2394);
+        } if (chuc < 10) {
+            return ((135_000*(chuc + 1) + 1000) * min);
+        } else {
+            if (chuc < 15) {
+                return ((3_500_000*(chuc + 1) - 28_500_000) * min);
+            } else if (chuc < 20) {
+                return ((3_600_000*(chuc + 1) - 35_100_000) * min);
+            } else {
+                return ((4_700_000*(chuc + 1) - 67_200_000) * min);
+            }
+        }
+}
+
 function repeatExperiment(total_trials, current_star, desired_star, rates, item_level, boom_protect, thirty_off, star_catch, five_ten_fifteen, sauna, silver, gold, diamond, item_type, two_plus, useAEE) {
     //* return [average_cost, average_booms, meso_result_list, boom_result_list] */
     var total_mesos = 0;
@@ -307,21 +283,21 @@ function do_stuff() {
         [0.65, 0.35, 0, 0], //7 stars
         [0.6, 0.4, 0, 0], //8 stars
         [0.55, 0.45, 0, 0], //9 stars
-        [0.5, 0.5, 0, 0], //10 stars
-        [0.45, 0, 0.55, 0], //11 stars
-        [0.4, 0.0, 0.594, 0.006], //12 stars
-        [0.35, 0.0, 0.637, 0.013], //13 stars
-        [0.3, 0.0, 0.686, 0.014], //14 stars
-        [0.3, 0.679, 0, 0.021], //15 stars
-        [0.3, 0.0, 0.679, 0.021], //16 stars
-        [0.3, 0.0, 0.679, 0.021], //17 stars
-        [0.3, 0.0, 0.672, 0.028], //18 stars
-        [0.3, 0.0, 0.672, 0.028], //19 stars
-        [0.3, 0.63, 0, 0.07], //20 stars
-        [0.3, 0, 0.63, 0.07], //21 stars
-        [0.03, 0.0, 0.776, 0.194], //22 stars
-        [0.02, 0.0, 0.686, 0.294], //23 stars
-        [0.01, 0.0, 0.594, 0.396] //24 stars
+        [0.45, 0.55, 0, 0], //10 stars
+        [0.39, 0, 0.61, 0], //11 stars
+        [0.36, 0.0, 0.64, 0], //12 stars
+        [0.35, 0.0, 0.64, 0.01], //13 stars
+        [0.33, 0.0, 0.66, 0.01], //14 stars
+        [0.28, 0.7, 0, 0.02], //15 stars
+        [0.25, 0.0, 0.725, 0.025], //16 stars
+        [0.23, 0.0, 0.74, 0.03], //17 stars
+        [0.2, 0.0, 0.76, 0.04], //18 stars
+        [0.2, 0.0, 0.755, 0.045], //19 stars
+        [0.15, 0.785, 0, 0.65], //20 stars
+        [0.12, 0, 0.8, 0.08], //21 stars
+        [0.1, 0.0, 0.75, 0.15], //22 stars
+        [0.06, 0.0, 0.74, 0.2], //23 stars
+        [0.06, 0.0, 0.64, 0.3] //24 stars
     ]
 
     let item_level = parseInt(document.getElementById('level').value);
