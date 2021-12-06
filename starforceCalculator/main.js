@@ -87,7 +87,7 @@ function attemptCost(current_star, item_level, boom_protect, thirty_off, sauna, 
 	{
 		x = true;
 	}
-	return parseFloat(sfCost(current_star, x));
+	return parseFloat(sfCost(current_star, x, item_level));
 }
 
 function checkChanceTime(decrease_count) {
@@ -212,7 +212,7 @@ function performExperiment(current_stars, desired_star, rates, item_level, boom_
     return [total_mesos, total_booms]
 }
 
-function sfCost(chuc, superior)
+function sfCost(chuc, superior, reqLevel)
 {
 	var min = Math.min(1.25, Math.max(1, Math.log(reqLevel)));
 
