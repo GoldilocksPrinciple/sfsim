@@ -94,7 +94,7 @@ function checkChanceTime(decrease_count) {
     return decrease_count == 2
 }
 
-function determineOutcome(current_star, rates, star_catch, boom_protect, five_ten_fifteen, sauna, item_type) {
+function determineOutcome(current_star, rates, star_catch, boom_protect, five_ten_fifteen, sauna, item_type, canDoubleTime) {
     /** returns either "Success", "Maintain", "Decrease", or "Boom" */
     if (five_ten_fifteen) {
         if (current_star == 5 || current_star == 10 || current_star == 15) {
@@ -109,6 +109,11 @@ function determineOutcome(current_star, rates, star_catch, boom_protect, five_te
     var probability_decrease = rates[current_star][2];
     var probability_boom = rates[current_star][3];
 
+	if (canDoubleTime)
+	{
+		probability_success *= 2;
+	}
+	
     if (sauna) {
         if ((current_star >= 12 && current_star <= 14) || (item_type == 'tyrant' && (current_star >= 5 && current_star <= 7))) {
             probability_decrease = probability_decrease + probability_boom;
@@ -154,7 +159,7 @@ function determineOutcome(current_star, rates, star_catch, boom_protect, five_te
     }
 }
 
-function performExperiment(current_stars, desired_star, rates, item_level, boom_protect, thirty_off, star_catch, five_ten_fifteen, sauna, silver, gold, diamond, item_type, two_plus, useAEE) {
+function performExperiment(current_stars, desired_star, rates, item_level, boom_protect, thirty_off, star_catch, five_ten_fifteen, sauna, silver, gold, diamond, item_type, two_plus, useAEE, canDoubleTime) {
     /** returns [total_mesos, total_booms]  or [AEE_amount, total_booms]*/
     var current_star = current_stars;
     var total_mesos = 0;
@@ -182,9 +187,10 @@ function performExperiment(current_stars, desired_star, rates, item_level, boom_
             }
         } 
         else {
-            var outcome = determineOutcome(current_star, rates, star_catch, boom_protect, five_ten_fifteen, sauna, item_type);
+            var outcome = determineOutcome(current_star, rates, star_catch, boom_protect, five_ten_fifteen, sauna, item_type, canDoubleTime);
 
             if (outcome == "Success") {
+                canDoubleTime = false;
                 decrease_count = 0;
                 if (two_plus && current_star <= 10){
                     current_star = current_star + 2;
@@ -195,6 +201,7 @@ function performExperiment(current_stars, desired_star, rates, item_level, boom_
             } else if (outcome == "Decrease") {
                 decrease_count++;
                 current_star--;
+                canDoubleTime = true;
             } else if (outcome == "Maintain") {
                 decrease_count = 0;
             } else if (outcome == "Boom" && item_type == 'normal') {
@@ -209,7 +216,7 @@ function performExperiment(current_stars, desired_star, rates, item_level, boom_
         }
     }
 
-    return [total_mesos, total_booms]
+    return [total_mesos, total_booms, canDoubleTime]
 }
 
 function sfCost(chuc, superior, reqLevel)
@@ -239,17 +246,21 @@ function repeatExperiment(total_trials, current_star, desired_star, rates, item_
     var meso_result_list = [];
     var boom_result_list = [];
     var meso_result_list_divided = [];
+	
+	var canDoubleTime = false;
 
     while (current_trial < total_trials) {
-        var trial_mesos = performExperiment(current_star, desired_star, rates, item_level, boom_protect, thirty_off, star_catch, five_ten_fifteen, sauna, silver, gold, diamond, item_type, two_plus, useAEE)[0];
+        var trial_mesos = performExperiment(current_star, desired_star, rates, item_level, boom_protect, thirty_off, star_catch, five_ten_fifteen, sauna, silver, gold, diamond, item_type, two_plus, useAEE, canDoubleTime)[0];
         meso_result_list.push(trial_mesos);
         meso_result_list_divided.push(trial_mesos / 1000000000);
 
-        var trial_booms = performExperiment(current_star, desired_star, rates, item_level, boom_protect, thirty_off, star_catch, five_ten_fifteen, sauna, silver, gold, diamond, item_type, two_plus, useAEE)[1];
+        var trial_booms = performExperiment(current_star, desired_star, rates, item_level, boom_protect, thirty_off, star_catch, five_ten_fifteen, sauna, silver, gold, diamond, item_type, two_plus, useAEE, canDoubleTime)[1];
         boom_result_list.push(trial_booms);
 
         total_mesos = total_mesos + trial_mesos;
         total_booms = total_booms + trial_booms;
+		
+		canDoubleTime = performExperiment(current_star, desired_star, rates, item_level, boom_protect, thirty_off, star_catch, five_ten_fifteen, sauna, silver, gold, diamond, item_type, two_plus, useAEE, canDoubleTime)[2]
         current_trial++;
     }
     var average_cost = parseFloat((total_mesos / total_trials).toFixed(0));
