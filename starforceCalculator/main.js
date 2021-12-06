@@ -80,14 +80,19 @@ function median(values) {
         return (values[half - 1] + values[half]) / 2.0;
 }
 
-function attemptCost(current_star, item_level, boom_protect, thirty_off, sauna, silver, gold, diamond, five_ten_fifteen, chance_time, item_type)
+function attemptCost(current_star, item_level, boom_protect, thirty_off, sauna, silver, gold, diamond, five_ten_fifteen, chance_time, item_type, canDoubleTime)
 {
 	var x = false;
 	if (item_type == "tyrant")
 	{
 		x = true;
 	}
-	return parseFloat(sfCost(current_star, x, item_level));
+	var r = parseFloat(sfCost(current_star, x, item_level));
+	if (canDoubleTime)
+	{
+		r *= 2;
+	}
+	return r;
 }
 
 function checkChanceTime(decrease_count) {
@@ -173,7 +178,7 @@ function performExperiment(current_stars, desired_star, rates, item_level, boom_
         }
         else{
             var chanceTime = checkChanceTime(decrease_count); 
-            total_mesos = total_mesos + attemptCost(current_star, item_level, boom_protect, thirty_off, sauna, silver, gold, diamond, five_ten_fifteen, chanceTime, item_type);
+            total_mesos = total_mesos + attemptCost(current_star, item_level, boom_protect, thirty_off, sauna, silver, gold, diamond, five_ten_fifteen, chanceTime, item_type, canDoubleTime);
         }
 
         if (chanceTime) {
