@@ -238,7 +238,7 @@ function performExperiment(current_stars, desired_star, rates, item_level, boom_
         }
     }
 
-    return [total_mesos, total_booms, canDoubleTime]
+    return [total_mesos, total_booms]
 }
 
 function sfCost(chuc, superior, reqLevel)
