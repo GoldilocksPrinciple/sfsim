@@ -681,7 +681,7 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("plus2").disabled = false;
             document.getElementById('error-container').style.display = '';
             document.getElementById('error-msg').innerHTML =
-                `<p style="color:#C0FFC2">Note: Getting above 22 stars on Normal gear is very unlikely. The calculator may crash if you attempt going above 22 stars.</p>`;
+                `<p style="color:#8b3687">Note: Getting above 22 stars on Normal gear is very unlikely. The calculator may crash if you attempt going above 22 stars.</p>`;
         }
     }).change();
 });
