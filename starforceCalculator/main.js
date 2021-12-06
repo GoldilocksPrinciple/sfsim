@@ -640,11 +640,11 @@ document.addEventListener("DOMContentLoaded", function () {
         if (document.getElementById("normal").selected){
             //disable AEE checkbox from being clicked
             document.getElementById('AEE').disabled = true;
-            document.getElementById("safeguard").disabled = false;
+            document.getElementById("safeguard").disabled = true;
     
             document.getElementById("mvp").disabled = false;
 
-            document.getElementById('target_stars').value = 22;
+            document.getElementById('target_stars').value = 21;
     
             document.getElementById("level").disabled = false;
     
