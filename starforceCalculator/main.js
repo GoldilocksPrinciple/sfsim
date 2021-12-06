@@ -626,6 +626,8 @@ document.addEventListener("DOMContentLoaded", function () {
     
             document.getElementById("30").disabled = true;
             document.getElementById("30").checked = false;
+		
+		document.getElementById("DT").disabled = false;
 
             document.getElementById('target_stars').value = 12;
     
@@ -652,6 +654,7 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById('target_stars').value = 21;
     
             document.getElementById("level").disabled = false;
+		document.getElementById("DT").disabled = false;
     
             document.getElementById("5_10_15").disabled = false;
             document.getElementById("30").disabled = false;
