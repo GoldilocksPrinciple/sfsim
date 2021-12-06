@@ -88,10 +88,17 @@ function attemptCost(current_star, item_level, boom_protect, thirty_off, sauna, 
 		x = true;
 	}
 	var r = parseFloat(sfCost(current_star, x, item_level));
+	
 	if (canDoubleTime)
 	{
 		r *= 2;
 	}
+	
+	var MLG = 15000000; // approx nx cost
+	var NX = 200000 * current_star;
+	var nxApprox = NX / 1000000;
+	r += nxApprox * MLG;
+	
 	return r;
 }
 
