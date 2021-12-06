@@ -243,7 +243,7 @@ function sfCost(chuc, superior, reqLevel)
         }
 }
 
-function repeatExperiment(total_trials, current_star, desired_star, rates, item_level, boom_protect, thirty_off, star_catch, five_ten_fifteen, sauna, silver, gold, diamond, item_type, two_plus, useAEE) {
+function repeatExperiment(total_trials, current_star, desired_star, rates, item_level, boom_protect, thirty_off, star_catch, five_ten_fifteen, sauna, silver, gold, diamond, item_type, two_plus, useAEE, useDT) {
     //* return [average_cost, average_booms, meso_result_list, boom_result_list] */
     var total_mesos = 0;
     var total_booms = 0;
@@ -264,8 +264,10 @@ function repeatExperiment(total_trials, current_star, desired_star, rates, item_
 
         total_mesos = total_mesos + trial_mesos;
         total_booms = total_booms + trial_booms;
-		
-		canDoubleTime = performExperiment(current_star, desired_star, rates, item_level, boom_protect, thirty_off, star_catch, five_ten_fifteen, sauna, silver, gold, diamond, item_type, two_plus, useAEE, canDoubleTime)[2]
+		if (useDT)
+		{
+			canDoubleTime = performExperiment(current_star, desired_star, rates, item_level, boom_protect, thirty_off, star_catch, five_ten_fifteen, sauna, silver, gold, diamond, item_type, two_plus, useAEE, canDoubleTime)[2];
+		}
         current_trial++;
     }
     var average_cost = parseFloat((total_mesos / total_trials).toFixed(0));
@@ -346,6 +348,7 @@ function do_stuff() {
     var sauna = document.getElementById('sauna').checked;
     var two_plus = document.getElementById('plus2').checked;
     var useAEE = document.getElementById('AEE').checked;
+	var useDoubleTime = document.getElementById('DT').checked;
 
     var silver = false;
     var gold = false;
@@ -406,7 +409,7 @@ function do_stuff() {
         diamond = true;
     }
 		
-    var result = repeatExperiment(total_trials, current_star, desired_star, rates, item_level, boom_protect, thirty_off, star_catch, five_ten_fifteen, sauna, silver, gold, diamond, item_type, two_plus, useAEE);
+    var result = repeatExperiment(total_trials, current_star, desired_star, rates, item_level, boom_protect, thirty_off, star_catch, five_ten_fifteen, sauna, silver, gold, diamond, item_type, two_plus, useAEE, useDoubleTime);
     //result = [average_cost, average_booms, meso_result_list, boom_result_list, median_cost, median_booms, max_cost, min_cost, max_booms, min_booms, meso_std, boom_std, meso_result_list_divided]
     var average_mesos = result[0].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     var average_booms = result[1];
