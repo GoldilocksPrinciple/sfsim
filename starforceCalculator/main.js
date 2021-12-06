@@ -638,9 +638,11 @@ document.addEventListener("DOMContentLoaded", function () {
     
         }
         if (document.getElementById("normal").selected){
+		document.getElementById("level").value = 160;
             //disable AEE checkbox from being clicked
             document.getElementById('AEE').disabled = true;
             document.getElementById("safeguard").disabled = true;
+		document.getElementById("safeguard").value = 'no';
     
             document.getElementById("mvp").disabled = false;
 
