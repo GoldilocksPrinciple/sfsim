@@ -80,6 +80,27 @@ function median(values) {
         return (values[half - 1] + values[half]) / 2.0;
 }
 
+function nxDoubleTimeCost(chuc, superior) {
+        defaultNX = 500000;
+        firstNXAdd = 103333;
+        secondNXAdd = 83333;
+        if (chuc > 10 && chuc < 20) {
+            return (defaultNX+(firstNXAdd*(chuc-10))) * (superior ? 2 : 1);
+        } else if (chuc >= 20) {
+            return (defaultNX+(firstNXAdd*(chuc-10))+(secondNXAdd*(chuc-20))) * (superior ? 2 : 1);
+        } else {
+            return defaultNX * (superior ? 2 : 1);
+        }
+    }
+
+function mesoDoubleTimeCost(chuc, superior) {
+        if(chuc < 15) {
+            return 0;
+        }
+        defaultMesos = 2500000;
+        return (defaultMesos * (chuc-14));
+    }
+
 function attemptCost(current_star, item_level, boom_protect, thirty_off, sauna, silver, gold, diamond, five_ten_fifteen, chance_time, item_type, canDoubleTime)
 {
 	var x = false;
@@ -90,14 +111,16 @@ function attemptCost(current_star, item_level, boom_protect, thirty_off, sauna, 
 	var r = parseFloat(sfCost(current_star, x, item_level));
 	
 	var MLG = document.getElementById('mlgCost').value; // approx nx cost
-	var NX =nxCost(current_star, x);
+	var NX = nxCost(current_star, x);
 	var nxApprox = NX / 1000000;
-	r += nxApprox * MLG;
 	
 	if (canDoubleTime)
 	{
-		r *= 2;
+		r += mesoDoubleTimeCost(current_star, x);
+		NX += nxDoubleTimeCost(current_star, x);
 	}
+	
+	r += nxApprox * MLG;
 	
 	return r;
 }
