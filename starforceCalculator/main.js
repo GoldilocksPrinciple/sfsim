@@ -90,7 +90,7 @@ function attemptCost(current_star, item_level, boom_protect, thirty_off, sauna, 
 	var r = parseFloat(sfCost(current_star, x, item_level));
 	
 	var MLG = document.getElementById('mlgCost').value; // approx nx cost
-	var NX = document.getElementById('nxPerStarApprox').value * current_star;
+	var NX =nxCost(current_star, x);
 	var nxApprox = NX / 1000000;
 	r += nxApprox * MLG;
 	
@@ -253,19 +253,38 @@ function sfCost(chuc, superior, reqLevel)
 	var min = Math.min(1.25, Math.max(1, Math.log(reqLevel)));
 
         if (superior) {
-            return Math.pow(reqLevel, 3.2394);
+            min *= 1.1;
         } if (chuc < 10) {
-            return ((135_000*(chuc + 1) + 1000) * min);
+            return ((300_000*(chuc + 1) + 1000) * min);
         } else {
             if (chuc < 15) {
                 return ((3_500_000*(chuc + 1) - 28_500_000) * min);
             } else if (chuc < 20) {
-                return ((3_600_000*(chuc + 1) - 35_100_000) * min);
+                return ((4_100_000*(chuc + 1) - 35_100_000) * min);
             } else {
-                return ((4_700_000*(chuc + 1) - 67_200_000) * min);
+                return ((5_300_000*(chuc + 1) - 67_200_000) * min);
             }
         }
 }
+
+function nxCost(chuc, superior) {
+        defaultNX = 483333;
+        firstNXAdd = 80333;
+        secondNXAdd = 53333;
+        superiorNX = 1170000;
+        if (superior) {
+            return superiorNX;
+        }
+	if (chuc > 15 && chuc < 20) {
+            return defaultNX+(firstNXAdd*(chuc-15));
+        } else if (chuc >= 20 && chuc <= 22) {
+            return (2* defaultNX+(firstNXAdd * 3 *(chuc-15))+(secondNXAdd* 3 * (chuc-20)) + 50002);
+        } else if(chuc >= 23 && chuc <= 25) {
+            return 3*defaultNX + (firstNXAdd * 5 * (chuc - 15)) + (secondNXAdd * 5 * (chuc - 20)) + 50002;
+        } else {
+            return 0;
+        }
+    }
 
 function repeatExperiment(total_trials, current_star, desired_star, rates, item_level, boom_protect, thirty_off, star_catch, five_ten_fifteen, sauna, silver, gold, diamond, item_type, two_plus, useAEE, useDT) {
     //* return [average_cost, average_booms, meso_result_list, boom_result_list] */
