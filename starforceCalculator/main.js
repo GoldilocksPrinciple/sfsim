@@ -365,11 +365,7 @@ function repeatExperiment(total_trials, current_star, desired_star, rates, item_
     var meso_std = 0 //parseFloat(standardDeviation(meso_result_list).toFixed(0));
     var boom_std = 0 //parseFloat(standardDeviation(boom_result_list).toFixed(2));
     
-    console.log('------------------------------');
-    console.log('total nx: ' + total_nx);
-    console.log('avg nx: ' + average_nx);
-    console.log('median nx: ' + median_nx);
-    return [average_cost, average_booms, meso_result_list, boom_result_list, median_cost, median_booms, max_cost, min_cost, max_booms, min_booms, meso_std, boom_std, meso_result_list_divided]
+    return [average_cost, average_booms, meso_result_list, boom_result_list, median_cost, median_booms, max_cost, min_cost, max_booms, min_booms, meso_std, boom_std, meso_result_list_divided, average_nx, median_nx, nx_result_list, nx_result_list_divided, min_nx, max_nx ]
 }
 //(successRate, maintainRate, decreaseRate, boomRate)
 
@@ -510,6 +506,13 @@ function do_stuff() {
 
     var max_booms = result[8];
     var min_booms = result[9];
+	
+    var average_nx = results[13];
+    var median_nx = results[14];
+    var nx_result_list = results[15];
+    var nx_result_list_divided = results[16];
+    var min_nx = results[17];
+    var max_nx = results[18];
 
     var seventy_fifth_percentile = (percentile(meso_result_list, 0.75).toFixed(0)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     var eighty_fifth_percentile = (percentile(meso_result_list, 0.85).toFixed(0)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -518,6 +521,10 @@ function do_stuff() {
     var seventy_fifth_percentile_boom = (percentile(boom_result_list, 0.75).toFixed(0)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     var eighty_fifth_percentile_boom = (percentile(boom_result_list, 0.85).toFixed(0)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     var ninty_fifth_percentile_boom = (percentile(boom_result_list, 0.95).toFixed(0)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	
+    var seventy_fifth_percentile_nx = (percentile(nx_result_list, 0.75).toFixed(0)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    var eighty_fifth_percentile_nx = (percentile(nx_result_list, 0.85).toFixed(0)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    var ninty_fifth_percentile_nx = (percentile(nx_result_list, 0.95).toFixed(0)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
     if (useAEE){ //here
         var x_axis = 'Number of AEEs';
@@ -640,6 +647,24 @@ function do_stuff() {
     	95% chance within ${ninty_fifth_percentile_boom} booms<br />
     </p>
   </div>
+  
+  <div class=" statBox statBox5" style="background-color:#aaa;">
+    <h2 style="text-align:center;">${stat_title}</h2>
+    	<p style="text-align:center;"">
+    		Average NX: ${average_nx}<br />
+        Median NX: ${median_nx}<br />
+        Range of NX: ${min_nx} - ${max_nx}<br />
+    	</p>
+  </div>
+  <div class=" statBox statBox6" style="background-color:#bbb;">
+    <h2 style="text-align:center;">${percentile_title}</h2>
+    <p style="text-align:center;"">
+    	75% chance within ${seventy_fifth_percentile_nx} NX<br />
+    	85% chance within ${eighty_fifth_percentile_nx} NX<br />
+    	95% chance within ${ninty_fifth_percentile_nx} NX<br />
+    </p>
+  </div>
+  
 </div>
     `
     }
