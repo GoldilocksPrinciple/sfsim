@@ -127,7 +127,7 @@ function attemptCost(current_star, item_level, boom_protect, thirty_off, sauna, 
 }
 
 function checkChanceTime(decrease_count) {
-    return decrease_count == 2
+    return decrease_count == 3
 }
 
 function determineOutcome(current_star, rates, star_catch, boom_protect, five_ten_fifteen, sauna, item_type, canDoubleTime) {
@@ -253,11 +253,11 @@ function performExperiment(current_stars, desired_star, rates, item_level, boom_
                 	canDoubleTime = true;
 		    }
             } else if (outcome == "Maintain") {
+		    decrease_count++;
 		    if (useDT && (current_star == 10 || current_star == 15 || current_star == 20))
 		    {
 			    canDoubleTime = true;
 		    }
-                decrease_count = 0;
             } else if (outcome == "Boom" && item_type == 'normal') {
 		    canDoubleTime = false;
                 decrease_count = 0;
