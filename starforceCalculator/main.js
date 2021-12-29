@@ -122,7 +122,7 @@ function attemptCost(current_star, item_level, boom_protect, thirty_off, sauna, 
 	
 	r += nxApprox * MLG;
 	
-	return r;
+	return [r, NX];
 }
 
 function checkChanceTime(decrease_count) {
@@ -205,6 +205,7 @@ function performExperiment(current_stars, desired_star, rates, item_level, boom_
     /** returns [total_mesos, total_booms]  or [AEE_amount, total_booms]*/
     var current_star = current_stars;
     var total_mesos = 0;
+    var total_nx = 0;
     var total_booms = 0;
     var decrease_count = 0;
 	var canDoubleTime = false;
@@ -216,7 +217,9 @@ function performExperiment(current_stars, desired_star, rates, item_level, boom_
         }
         else{
             var chanceTime = checkChanceTime(decrease_count); 
-            total_mesos = total_mesos + attemptCost(current_star, item_level, boom_protect, thirty_off, sauna, silver, gold, diamond, five_ten_fifteen, chanceTime, item_type, canDoubleTime);
+	    var tmp = attemptCost(current_star, item_level, boom_protect, thirty_off, sauna, silver, gold, diamond, five_ten_fifteen, chanceTime, item_type, canDoubleTime);
+            total_mesos = total_mesos + tmp[0];
+	    total_nx = total_nx + tmp[1];
         }
 
         if (chanceTime) {
@@ -268,7 +271,7 @@ function performExperiment(current_stars, desired_star, rates, item_level, boom_
         }
     }
 
-    return [total_mesos, total_booms]
+    return [total_mesos, total_booms, total_nx]
 }
 
 function sfCost(chuc, superior, reqLevel)
@@ -313,10 +316,15 @@ function repeatExperiment(total_trials, current_star, desired_star, rates, item_
     //* return [average_cost, average_booms, meso_result_list, boom_result_list] */
     var total_mesos = 0;
     var total_booms = 0;
+    var total_nx = 0;
     var current_trial = 0;
+	
     var meso_result_list = [];
     var boom_result_list = [];
+    var nx_result_list = [];
+	
     var meso_result_list_divided = [];
+    var nx_result_list_divided = [];
 	
     while (current_trial < total_trials) {
 	    var lmao = performExperiment(current_star, desired_star, rates, item_level, boom_protect, thirty_off, star_catch, five_ten_fifteen, sauna, silver, gold, diamond, item_type, two_plus, useAEE, useDT);
@@ -328,26 +336,38 @@ function repeatExperiment(total_trials, current_star, desired_star, rates, item_
         var trial_booms = lmao[1];
         boom_result_list.push(trial_booms);
 
+	var trial_nx = lmao[2];
+        nx_result_list.push(trial_nx);
+        nx_result_list_divided.push(trial_nx / 1000000);
+	    
         total_mesos = total_mesos + trial_mesos;
         total_booms = total_booms + trial_booms;
+        total_nx = total_nx + trial_nx;
 
         current_trial++;
     }
     var average_cost = parseFloat((total_mesos / total_trials).toFixed(0));
     var average_booms = parseFloat((total_booms / total_trials).toFixed(2));
+    var average_nx = parseFloat((total_nx / total_trials).toFixed(0));
 
     var median_cost = median(meso_result_list);
     var median_booms = median(boom_result_list);
+    var median_nx = median(nx_result_list);
 
     var max_cost = Math.max.apply(Math, meso_result_list);
     var max_booms = Math.max.apply(Math, boom_result_list);
+    var max_nx = Math.max.apply(Math, nx_result_list);
 
     var min_cost = Math.min.apply(Math, meso_result_list);
     var min_booms = Math.min.apply(Math, boom_result_list);
+    var min_nx = Math.min.apply(Math, nx_result_list);
 
     var meso_std = 0 //parseFloat(standardDeviation(meso_result_list).toFixed(0));
     var boom_std = 0 //parseFloat(standardDeviation(boom_result_list).toFixed(2));
 
+    console.log(total_nx);
+    console.log(average_nx);
+    console.log(median_nx);
     return [average_cost, average_booms, meso_result_list, boom_result_list, median_cost, median_booms, max_cost, min_cost, max_booms, min_booms, meso_std, boom_std, meso_result_list_divided]
 }
 //(successRate, maintainRate, decreaseRate, boomRate)
