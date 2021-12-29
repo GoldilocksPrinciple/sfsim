@@ -218,6 +218,10 @@ function performExperiment(current_stars, desired_star, rates, item_level, boom_
         }
         else{
             var chanceTime = checkChanceTime(decrease_count); 
+		if (chanceTime)
+		{
+			canDoubleTime = false;
+		}
 	    var tmp = attemptCost(current_star, item_level, boom_protect, thirty_off, sauna, silver, gold, diamond, five_ten_fifteen, chanceTime, item_type, canDoubleTime);
             total_mesos = total_mesos + tmp[0];
 	    total_nx = total_nx + tmp[1];
