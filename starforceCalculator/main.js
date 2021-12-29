@@ -260,7 +260,7 @@ function performExperiment(current_stars, desired_star, rates, item_level, boom_
             } else if (outcome == "Boom" && item_type == 'normal') {
 		    canDoubleTime = false;
                 decrease_count = 0;
-                current_star = 12;
+                current_star = 0;
                 total_booms++;
             } else if (outcome == "Boom" && item_type == 'tyrant') {
 		    canDoubleTime = false;
