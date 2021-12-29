@@ -507,12 +507,12 @@ function do_stuff() {
     var max_booms = result[8];
     var min_booms = result[9];
 	
-    var average_nx = results[13];
-    var median_nx = results[14];
-    var nx_result_list = results[15];
-    var nx_result_list_divided = results[16];
-    var min_nx = results[17];
-    var max_nx = results[18];
+    var average_nx = result[13];
+    var median_nx = result[14];
+    var nx_result_list = result[15];
+    var nx_result_list_divided = result[16];
+    var min_nx = result[17];
+    var max_nx = result[18];
 
     var seventy_fifth_percentile = (percentile(meso_result_list, 0.75).toFixed(0)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     var eighty_fifth_percentile = (percentile(meso_result_list, 0.85).toFixed(0)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -540,6 +540,79 @@ function do_stuff() {
         var percentile_title = 'Mesos Percentiles';
         var currency = 'mesos'
     }
+    Highcharts.chart('container', {
+        title: {
+            text: 'Frequency Histogram'
+        },
+
+        xAxis: [{
+            title: {
+                text: ''
+            },
+            alignTicks: false,
+            visible: false,
+            opposite: true
+        }, {
+            title: {
+                text: x_axis
+            },
+            alignTicks: false,
+            opposite: false
+        }],
+
+        yAxis: [{
+            title: {
+                text: ''
+            },
+            visible: false,
+            opposite: true
+        }, {
+            title: {
+                text: 'Frequency'
+            },
+            opposite: false
+        }],
+
+        plotOptions: {
+            histogram: {
+                accessibility: {
+                    pointDescriptionFormatter: function(point) {
+                        var ix = point.index + 1,
+                            x1 = point.x.toFixed(3),
+                            x2 = point.x2.toFixed(3),
+                            val = point.y;
+                        return ix + '. ' + x1 + ' to ' + x2 + ', ' + val + '.';
+                    }
+                }
+            }
+        },
+
+        series: [{
+            name: 'Histogram',
+            type: 'histogram',
+            color: '#C0FFC2',
+            xAxis: 1,
+            yAxis: 1,
+            baseSeries: 's1',
+            zIndex: -1
+        }, {
+            name: '',
+            type: 'scatter',
+            visible: false,
+            data: bar_data,
+            id: 's1',
+            marker: {
+                radius: 0
+            }
+        }]
+    });
+	
+	var x_axis = 'NX Cost (in Millions)';
+        var bar_data = nx_result_list_divided;
+        var stat_title = 'NX Stats';
+        var percentile_title = 'NX Percentiles';
+        var currency = 'NX'
+    
     Highcharts.chart('container', {
         title: {
             text: 'Frequency Histogram'
