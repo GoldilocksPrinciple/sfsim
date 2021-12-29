@@ -365,9 +365,9 @@ function repeatExperiment(total_trials, current_star, desired_star, rates, item_
     var meso_std = 0 //parseFloat(standardDeviation(meso_result_list).toFixed(0));
     var boom_std = 0 //parseFloat(standardDeviation(boom_result_list).toFixed(2));
 
-    console.log(total_nx);
-    console.log(average_nx);
-    console.log(median_nx);
+    console.log('total nx:' + total_nx);
+    console.log('avg nx:' + average_nx);
+    console.log('median nx:' + median_nx);
     return [average_cost, average_booms, meso_result_list, boom_result_list, median_cost, median_booms, max_cost, min_cost, max_booms, min_booms, meso_std, boom_std, meso_result_list_divided]
 }
 //(successRate, maintainRate, decreaseRate, boomRate)
