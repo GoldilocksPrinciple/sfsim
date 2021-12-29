@@ -382,10 +382,10 @@ function do_stuff() {
         [0.7, 0.3, 0, 0], //8 stars
         [0.65, 0.35, 0, 0], //9 stars
         [0.55, 0.45, 0, 0], //10 stars
-        [0.49, 0, 0.51, 0], //11 stars
-        [0.46, 0.0, 0.54, 0], //12 stars
-        [0.45, 0.0, 0.54, 0.01], //13 stars
-        [0.43, 0.0, 0.56, 0.01], //14 stars
+        [0.45, 0, 0.55, 0], //11 stars
+        [0.4, 0.0, 0.6, 0], //12 stars
+        [0.4, 0.0, 0.593, 0.007], //13 stars
+        [0.4, 0.0, 0.59, 0.01], //14 stars
         [0.38, 0.6, 0, 0.02], //15 stars
         [0.35, 0.0, 0.625, 0.025], //16 stars
         [0.33, 0.0, 0.64, 0.03], //17 stars
@@ -607,79 +607,7 @@ function do_stuff() {
         }]
     });
 	
-	var x_axis = 'NX Cost (in Millions)';
-        var bar_data = nx_result_list_divided;
-        var stat_title = 'NX Stats';
-        var percentile_title = 'NX Percentiles';
-        var currency = 'NX'
-    
-    Highcharts.chart('container', {
-        title: {
-            text: 'Frequency Histogram'
-        },
-
-        xAxis: [{
-            title: {
-                text: ''
-            },
-            alignTicks: false,
-            visible: false,
-            opposite: true
-        }, {
-            title: {
-                text: x_axis
-            },
-            alignTicks: false,
-            opposite: false
-        }],
-
-        yAxis: [{
-            title: {
-                text: ''
-            },
-            visible: false,
-            opposite: true
-        }, {
-            title: {
-                text: 'Frequency'
-            },
-            opposite: false
-        }],
-
-        plotOptions: {
-            histogram: {
-                accessibility: {
-                    pointDescriptionFormatter: function(point) {
-                        var ix = point.index + 1,
-                            x1 = point.x.toFixed(3),
-                            x2 = point.x2.toFixed(3),
-                            val = point.y;
-                        return ix + '. ' + x1 + ' to ' + x2 + ', ' + val + '.';
-                    }
-                }
-            }
-        },
-
-        series: [{
-            name: 'Histogram',
-            type: 'histogram',
-            color: '#C0FFC2',
-            xAxis: 1,
-            yAxis: 1,
-            baseSeries: 's1',
-            zIndex: -1
-        }, {
-            name: '',
-            type: 'scatter',
-            visible: false,
-            data: bar_data,
-            id: 's1',
-            marker: {
-                radius: 0
-            }
-        }]
-    });
-		document.getElementById("graphhere").style.display = '';
+    document.getElementById("graphhere").style.display = '';
     document.getElementById('result').style.display='';
     document.getElementById('error-container').style.display='none';
 
