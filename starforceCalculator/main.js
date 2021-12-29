@@ -648,9 +648,9 @@ function do_stuff() {
     	95% chance within ${ninty_fifth_percentile_boom} booms<br />
     </p>
   </div>
-  
+  <br>
   <div class=" statBox statBox5" style="background-color:#aaa;">
-    <h2 style="text-align:center;">${stat_title}</h2>
+    <h2 style="text-align:center;">NX Stats</h2>
     	<p style="text-align:center;"">
     		Average NX: ${average_nx}<br />
         Median NX: ${median_nx}<br />
@@ -658,7 +658,7 @@ function do_stuff() {
     	</p>
   </div>
   <div class=" statBox statBox6" style="background-color:#bbb;">
-    <h2 style="text-align:center;">${percentile_title}</h2>
+    <h2 style="text-align:center;"NX Percentiles</h2>
     <p style="text-align:center;"">
     	75% chance within ${seventy_fifth_percentile_nx} NX<br />
     	85% chance within ${eighty_fifth_percentile_nx} NX<br />
