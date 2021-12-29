@@ -112,13 +112,14 @@ function attemptCost(current_star, item_level, boom_protect, thirty_off, sauna, 
 	
 	var MLG = document.getElementById('mlgCost').value; // approx nx cost
 	var NX = nxCost(current_star, x);
-	var nxApprox = NX / 1000000;
 	
 	if (canDoubleTime)
 	{
 		r += mesoDoubleTimeCost(current_star, x);
 		NX += nxDoubleTimeCost(current_star, x);
 	}
+	
+	var nxApprox = NX / 1000000;
 	
 	r += nxApprox * MLG;
 	
